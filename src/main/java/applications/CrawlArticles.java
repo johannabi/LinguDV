@@ -8,6 +8,12 @@ import data.Article;
 import io.IO;
 import preprocessing.WikipediaCrawler;
 
+/**
+ * Diese Application crawlt Wikipedia-Artikel aus einer bestimmten Kategorie und
+ * liest ihren Inhalt aus.
+ * @author Johanna Binnewitt
+ *
+ */
 public class CrawlArticles {
 	
 	public static void main(String[] args) throws IOException {

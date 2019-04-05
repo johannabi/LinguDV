@@ -5,7 +5,21 @@
 	<groupId>LinguDV</groupId>
 	<artifactId>LinguDV</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
+		<scr.dir>src/main/java</scr.dir>
+	</properties>
+	
+	
 	<build>
+	
+		<sourceDirectory>${src.dir}</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -14,6 +28,17 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+				<!-- <executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals><goal>add-source</goal></goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>  -->
 			</plugin>
 		</plugins>
 	</build>
@@ -26,7 +51,7 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.3</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<!-- Hilfsklassen für IO -->
 		<dependency>
@@ -41,14 +66,14 @@
 			<artifactId>nekohtml</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 		<!-- Open NLP (Tokenizer, SentenceSplitter) -->
 		<dependency>
 			<groupId>org.apache.opennlp</groupId>
 			<artifactId>opennlp-tools</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.googlecode.mate-tools/anna -->
 		<!-- Mate Tools (Lemmatizer) -->
 		<dependency>
