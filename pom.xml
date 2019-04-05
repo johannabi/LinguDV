@@ -6,14 +6,10 @@
 	<artifactId>LinguDV</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	<properties>
-		<scr.dir>src/main/java</scr.dir>
-	</properties>
-	
 	
 	<build>
 	
-		<sourceDirectory>${src.dir}</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
