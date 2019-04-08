@@ -2,12 +2,9 @@ package io;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,21 +16,19 @@ public class IO {
 	
 
 	public static Set<String> readStopwords(String path) throws IOException {
-		// liest die Datei stopwords.txt ein, lege jedes enthaltene Wort
-		// auf ein Set und gib dieses Set zurück
-
-		// Set, das mit stopwords gefüllt und zurückgegeben wird
-		Set<String> stopwords = new HashSet<String>();
-
-		BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-		String line = "";
-		while ((line = br.readLine()) != null) {
-			stopwords.add(line);
-		}
-		br.close();
-		return stopwords;
+		// TODO JB: entwickle eine Methode, die alle Füllwörter aus der Datei
+		// unter dem gegebenen Pfad liest und auf ein Set<String> schreibt
+		return null;
 	}
 
+	/**
+	 * Methode liest alle .txt-Dateien mit Artikeln ein, die sich im übergebenen 
+	 * Verzeichnis befinden und schreibt diese auf die übergebene List<Article>
+	 * @param rootPath
+	 * @param articles
+	 * @return
+	 * @throws IOException
+	 */
 	public static List<Article> readArticles(String rootPath, List<Article> articles) throws IOException {
 
 		File rootDir = new File(rootPath);
@@ -52,38 +47,52 @@ public class IO {
 		return articles;
 	}
 	
-	public static Article readArticle(File file, String category) throws IOException {
+	private static Article readArticle(File file, String category) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		StringBuilder sb = new StringBuilder();
 		String line = "";
-		String url = br.readLine();
+		String url = br.readLine(); // 1. Zeile enthält URL
+		String subCategory = br.readLine(); // 2. Zeile enthält (Sub)Kategorie
 		while ((line = br.readLine()) != null) {
 			sb.append(line);
 		}
 		br.close();
-		return new Article(sb.toString(), file.getName(), url, category, "");
+		return new Article(sb.toString(), file.getName(), url, category, subCategory);
 	}
 
-	public static void exportArticles(String path, List<Article> articles) throws IOException {
+	/**
+	 * die gecrawlten Artikel können mit dieser Methode in .txt-Dateien gespeichert
+	 * werden. Der jeweilige Ordnername bezeichnet die Kategorie des Artikels
+	 * @param path
+	 * @param articles
+	 * @throws IOException
+	 */
+	public static void exportArticles(String path, Set<Article> articles) throws IOException {
+		
+		
+		System.out.println(articles.size() + " Artikel werden exportiert");
 		File data = new File(path);
 		data.mkdirs();
 
-		if (data.list() != null)
+		if (data.list() != null) //Verzeichnis wird zu Beginn bereinigt
 			FileUtils.cleanDirectory(data);
 
 		for (Article a : articles) {
-			String label = a.getCategory();
+			String category = a.getCategory();
+			File catDir = new File(data.getAbsolutePath() + "/" + category);
+			catDir.mkdirs();
+
+			// url und Artikelinhalt werden in die .txt-Datei geschrieben
 			String content = a.getContent();
 			String url = a.getUrl();
-			File cat = new File(data.getAbsolutePath() + "/" + label);
-			cat.mkdirs();
-
+			String subCategory = a.getSubCategory();
 			StringBuilder sb = new StringBuilder();
-			sb.append(url + "\n\n");
+			sb.append(url + "\n" + subCategory + "\n\n");
 			sb.append(content + "\n");
-			String fileName = a.getTitle().replaceAll("[\\/\\s:]+", "");
-			File export = new File(cat.getAbsolutePath() + "/" + fileName + ".txt");
-
+			// Sonderzeichen werden aus dem Dateinamen entfernt
+			String title = a.getTitle().replaceAll("[^\\w]+", ""); 
+			
+			File export = new File(catDir.getAbsolutePath() + "/" + title + ".txt");
 			if (!export.exists())
 				export.createNewFile();
 			FileWriter fw = new FileWriter(export);
@@ -92,18 +101,14 @@ public class IO {
 		}
 	}
 
-	public static void exportAllFeatures(String dataType, Set<String> allFeatures) {
-		StringBuilder sb = new StringBuilder();
-		for (String f : allFeatures) {
-			sb.append(f + "\n");
-		}
-		try {
-			FileWriter fw = new FileWriter(new File(dataType + "_allFeatures.txt"));
-			fw.write(sb.toString());
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	/**
+	 * Methode exportiert das Wörterbuch in eine .txt-Datei
+	 * @param allFeatures
+	 */
+	public static void exportAllFeatures(Set<String> allFeatures) {
+		String filePath = "allFeatures.txt";
+		//TODO JB: schreibe eine Methode, die unser Merkmal-Wörterbuch
+		// in eine .txt-Datei schreibt
 
 	}
 

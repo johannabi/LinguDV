@@ -1,20 +1,16 @@
 package preprocessing.parsing;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.cyberneko.html.parsers.DOMParser;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import data.Article;
 
-//import autoChirp.preProcessing.Document;
-//import de.unihd.dbs.uima.annotator.heideltime.resources.Language;
 
 /**
  * A Parser for Wikipedia-Urls using the org.cyberneko.html.parsers.DOMParser;
@@ -37,16 +33,15 @@ public class WikipediaParser {
 	private String regex = "((\\[[0-9]+\\])+(:[0-9]+)?)";
 
 	/**
-	 * extracts the plain text (p-elements) and title (first h1-element) of the
-	 * given wikipedia-url and returns an object of class Document
+	 * extrahiert Absätze (p-Tags) und den Titel (erstes h1-Tag), die sich unter der
+	 * übergebenen Wikipedia-URL befinden
 	 * 
-	 * @param url       the url to parse
-	 * @param catString
-	 * @param mainCat
+	 * @param url       Artikel-URL
+	 * @param mainCategory	oberste Kategorie, die durchsucht wird
+	 * @param category	konkrete Kategorie des Artikels
 	 */
 
 	public Article parse(String url, String mainCategory, String category) {
-//		System.out.println(url + " -- " + mainCategory);
 		try {
 			domParser.setProperty("http://cyberneko.org/html/properties/default-encoding", "UTF-8");
 			domParser.parse(url);
@@ -62,8 +57,7 @@ public class WikipediaParser {
 		} catch (Exception e) {
 			return null;
 		}
-		if(builder.length() > 100) {
-//			System.out.println(builder.toString().substring(0, 30));
+		if(builder.length() > 100) { // nur Artikel, die mehr als 100 Zeichen enthalten, werden aufgenommen.
 			return new Article(builder.toString().trim(), title, url, mainCategory, category);
 		}
 			
@@ -72,8 +66,8 @@ public class WikipediaParser {
 	}
 
 	/**
-	 * appends the content of each p-element to the documents text and selects the
-	 * first h1-element as title
+	 * sammelt alle p-Elemente des Dokuments und wählt das erste h1-Element als
+	 * Titel des Artikels
 	 * 
 	 * @param node
 	 */
@@ -100,6 +94,8 @@ public class WikipediaParser {
 		Node sibling = node.getNextSibling();
 		if (sibling != null) {
 			boolean crawl = true;
+			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
+			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = sibling.getAttributes();
 			if(nnm != null) {
 				Node classAttr = nnm.getNamedItem("class");
@@ -110,11 +106,13 @@ public class WikipediaParser {
 				}
 			} 
 			if(crawl)
-				process(sibling);
+				process(sibling); //bearbeitet rekursiv die Geschwister-Knoten
 		}
 		Node child = node.getFirstChild();
 		if (child != null) {
 			boolean crawl = true;
+			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
+			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = child.getAttributes();
 			if(nnm != null) {
 				Node classAttr = nnm.getNamedItem("class");
@@ -125,9 +123,7 @@ public class WikipediaParser {
 				}
 			} 
 			if(crawl)
-				process(child);
-//			Element e = (Element) child;
-//			if (!e.getAttribute("class").equals("NavFrame navigation-not-searchable"))
+				process(child); //bearbeitet rekursiv die Kind-Knoten
 				
 		}
 		if (hasTitle == false) {

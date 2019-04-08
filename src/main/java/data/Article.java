@@ -2,24 +2,44 @@ package data;
 
 import java.util.List;
 
+/**
+ * Diese Klasse repräsentiert den Inhalt eines Wikipedia-Artikels
+ * @author Johanna Binnewitt
+ *
+ */
 public class Article {
 	
+	/**
+	 * der gescrapte Inhalt des Artikels
+	 */
 	private String content;
+	/**
+	 * der Titel des Artikels
+	 */
 	private String title;
+	/**
+	 * die ursprüngliche URL des Artikels
+	 */
 	private String url;
+	/**
+	 * die (Über-)Kategorie, zu der der Artikel
+	 * gehört
+	 */
 	private String category;
+	/**
+	 * die tatsächliche Kategorie des Artikels
+	 */
+	private String subCategory;
+	/**
+	 * Bag of Words-Merkmale des Artikels
+	 */
 	private List<String> features;
-	private double[] vector;
 	
-	public Article(String content, String url, String category, String subCategory) {
+	public Article(String content, String title, String url, String category, String subCategory) {
 		this.content = content;
 		this.url = url;
 		this.category = category;
-	}
-	
-	
-	public Article(String content, String title, String url, String category, String subCategory) {
-		this(content, url, category, subCategory);
+		this.subCategory = subCategory;
 		this.title = title;
 	}
 	
@@ -27,21 +47,10 @@ public class Article {
 		return title;
 	}
 
-	public List<String> getFeatures() {
-		return features;
-	}
-	public void setFeatures(List<String> features) {
-		this.features = features;
-	}
-	public double[] getVector() {
-		return vector;
-	}
-	public void setVector(double[] vector) {
-		this.vector = vector;
-	}
 	public String getContent() {
 		return content;
 	}
+	
 	public String getUrl() {
 		return url;
 	}
@@ -50,10 +59,26 @@ public class Article {
 		return category;
 	}
 	
+	public String getSubCategory() {
+		return subCategory;
+	}
+	
+	public List<String> getFeatures() {
+		return features;
+	}
+	
+	public void setFeatures(List<String> features) {
+		this.features = features;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return this.content.equals(((Article)obj).getContent());
+		return this.url.equals(((Article)obj).getUrl());
+	}
+	
+	@Override
+	public int hashCode() {
+		return url.hashCode();
 	}
 	
 	
