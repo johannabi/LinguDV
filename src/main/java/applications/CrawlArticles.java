@@ -21,6 +21,7 @@ public class CrawlArticles {
 		List<String> categoryLinks = new ArrayList<String>();
 		// fügt Kategorien hinzu, die gesammelt werden sollen
 		categoryLinks.add("Klassifikation");
+		categoryLinks.add("Bergbau");
 		
 		int limit = 20; // Anzahl der Artikel pro Kategorie
 		WikipediaCrawler wc = new WikipediaCrawler();
