@@ -2,18 +2,12 @@ package applications;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import data.Article;
 import io.IO;
 import preprocessing.featureselection.AbstractFeatureSelector;
-import preprocessing.featureselection.MyTokenizer;
-import preprocessing.featureselection.OpenNLPTokenizer;
+import preprocessing.featureselection.Stemmer;
 
 /**
  * Diese Application dient dazu die gecrawlten Artikel
@@ -32,7 +26,8 @@ public class PreproArticles {
 		IO.readArticles("src/main/resources/data/export/Bergbau", articles);
 		System.out.println(articles.size() + " Artikel gefunden");
 		
-		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
+//		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
+		AbstractFeatureSelector fs = new Stemmer(false, "de");
 		for(int i = 0; i < articles.size(); i++) {
 			Article a = articles.get(i);
 			List<String> features = fs.selectFeatures(a.getContent());
