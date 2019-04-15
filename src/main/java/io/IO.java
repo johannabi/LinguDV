@@ -13,17 +13,18 @@ import org.apache.commons.io.FileUtils;
 import data.Article;
 
 public class IO {
-	
 
 	public static Set<String> readStopwords(String path) throws IOException {
 		// TODO JB: entwickle eine Methode, die alle Füllwörter aus der Datei
 		// unter dem gegebenen Pfad liest und auf ein Set<String> schreibt
+
 		return null;
 	}
 
 	/**
-	 * Methode liest alle .txt-Dateien mit Artikeln ein, die sich im übergebenen 
+	 * Methode liest alle .txt-Dateien mit Artikeln ein, die sich im übergebenen
 	 * Verzeichnis befinden und schreibt diese auf die übergebene List<Article>
+	 * 
 	 * @param rootPath
 	 * @param articles
 	 * @return
@@ -36,17 +37,17 @@ public class IO {
 
 		File[] dirs = rootDir.listFiles();
 		for (int i = 0; i < dirs.length; i++) {
-			
-			if(dirs[i].isDirectory()) {
+
+			if (dirs[i].isDirectory()) {
 				readArticles(dirs[i].getAbsolutePath(), articles);
-			} else {				
+			} else {
 				articles.add(readArticle(dirs[i], category));
-			}	
+			}
 		}
 
 		return articles;
 	}
-	
+
 	private static Article readArticle(File file, String category) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		StringBuilder sb = new StringBuilder();
@@ -63,18 +64,18 @@ public class IO {
 	/**
 	 * die gecrawlten Artikel können mit dieser Methode in .txt-Dateien gespeichert
 	 * werden. Der jeweilige Ordnername bezeichnet die Kategorie des Artikels
+	 * 
 	 * @param path
 	 * @param articles
 	 * @throws IOException
 	 */
 	public static void exportArticles(String path, Set<Article> articles) throws IOException {
-		
-		
+
 		System.out.println(articles.size() + " Artikel werden exportiert");
 		File data = new File(path);
 		data.mkdirs();
 
-		if (data.list() != null) //Verzeichnis wird zu Beginn bereinigt
+		if (data.list() != null) // Verzeichnis wird zu Beginn bereinigt
 			FileUtils.cleanDirectory(data);
 
 		for (Article a : articles) {
@@ -90,8 +91,8 @@ public class IO {
 			sb.append(url + "\n" + subCategory + "\n\n");
 			sb.append(content + "\n");
 			// Sonderzeichen werden aus dem Dateinamen entfernt
-			String title = a.getTitle().replaceAll("[^\\w]+", ""); 
-			
+			String title = a.getTitle().replaceAll("[^\\w]+", "");
+
 			File export = new File(catDir.getAbsolutePath() + "/" + title + ".txt");
 			if (!export.exists())
 				export.createNewFile();
@@ -99,17 +100,6 @@ public class IO {
 			fw.write(sb.toString());
 			fw.close();
 		}
-	}
-
-	/**
-	 * Methode exportiert das Wörterbuch in eine .txt-Datei
-	 * @param allFeatures
-	 */
-	public static void exportAllFeatures(Set<String> allFeatures) {
-		String filePath = "allFeatures.txt";
-		//TODO JB: schreibe eine Methode, die unser Merkmal-Wörterbuch
-		// in eine .txt-Datei schreibt
-
 	}
 
 }

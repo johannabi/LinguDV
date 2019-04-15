@@ -31,7 +31,7 @@ public abstract class AbstractFeatureSelector {
 
 		if (stopwordFilter)
 			try {
-				stopwords = IO.readStopwords("src/main/resources/stopwords_" + language + ".txt");
+				stopwords = IO.readStopwords("src/main/resources/stopwords-" + language + ".txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

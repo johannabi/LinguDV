@@ -1,8 +1,8 @@
 /src/main/resources/data
 /src/main/resources/MateTools
 /src/main/resources/OpenNLP
-/src/main/resources/stopwords_de.txt
-/src/main/resources/stopwords_en.txt
+/src/main/resources/stopwords-de.txt
+/src/main/resources/stopwords-en.txt
 
 articles_allFeatures.txt
 
@@ -11,12 +11,4 @@ articles_allFeatures.txt
 .settings
 /target/
 /bin/
-
-
-
-
-
-
-
-
 
