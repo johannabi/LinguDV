@@ -77,14 +77,6 @@
 			<version>0.9</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers -->
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers</artifactId>
-			<version>3.6.2</version>
-		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<!-- JUnit Test -->
 		<dependency>

@@ -6,11 +6,14 @@ import org.tartarus.snowball.SnowballProgram;
 import org.tartarus.snowball.ext.EnglishStemmer;
 import org.tartarus.snowball.ext.German2Stemmer;
 
+import opennlp.tools.stemmer.snowball.SnowballStemmer;
+import opennlp.tools.stemmer.snowball.SnowballStemmer.ALGORITHM;
+
 
 public class Stemmer extends AbstractFeatureSelector {
 	
 	private OpenNLPTokenizer tokenizer;
-	private SnowballProgram stemmer;
+	private SnowballStemmer stemmer;
 
 	
 
@@ -22,16 +25,15 @@ public class Stemmer extends AbstractFeatureSelector {
 		//Abhängig von der Sprache wird ein deutscher oder englischer
 		//Stemmer initialisiert
 		if(language.equals("de"))
-			this.stemmer = new German2Stemmer();
+			this.stemmer = new SnowballStemmer(ALGORITHM.GERMAN);
 		else if (language.equals("en"))
-			this.stemmer = new EnglishStemmer();
+			this.stemmer = new SnowballStemmer(ALGORITHM.ENGLISH);
 	}
 
 	@Override
 	public List<String> selectFeatures(String text) {
 		// TODO JB: tokenisiere den Text mithilfe des Tokenizers und reduziere die
 		// entstandenen Tokens auf den Wortstamm (mithilfe des Stemmers)
-
 		return null;
 	}
 	

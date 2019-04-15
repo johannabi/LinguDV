@@ -14,6 +14,7 @@ import data.Article;
 import io.IO;
 import preprocessing.featureselection.AbstractFeatureSelector;
 import preprocessing.featureselection.OpenNLPTokenizer;
+import preprocessing.featureselection.Stemmer;
 
 /**
  * Diese Application dient dazu die gecrawlten Artikel
@@ -34,7 +35,8 @@ public class PreproArticles {
 		
 		//TODO JB: erstelle ein Set, das alle Merkmale des Korpus sammelt
 		
-		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
+//		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
+		AbstractFeatureSelector fs = new Stemmer(false, "de");
 		// statt OpenNLPTokenizer kann hier auch der MyTokenizer oder
 		// der Stemmer initialisiert werden
 		
