@@ -38,14 +38,18 @@ public class PreproArticles {
 		// im Korpus enthaltenen Merkmale gesammelt haben
 		Set<String> allFeatures = new HashSet<String>();
 
-		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
-//		AbstractFeatureSelector fs = new Stemmer(false, "de");
+		
+//		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
+		AbstractFeatureSelector fs = new Stemmer(false, "de");
 //		AbstractFeatureSelector fs = new Lemmatizer(false, "de");
 		// statt OpenNLPTokenizer kann hier auch der MyTokenizer oder
 		// der Stemmer initialisiert werden
 		for (int i = 0; i < articles.size(); i++) {
 			Article a = articles.get(i);
 			List<String> features = fs.selectFeatures(a.getContent());
+			
+			//Artikel-Objekt werden die soeben ermittelten Merkmale übergeben
+			a.setFeatures(features);
 			
 			// die Merkmale des aktuellen Artikels werden zu allFeatures hinzugefügt
 			allFeatures.addAll(features);
@@ -75,11 +79,17 @@ public class PreproArticles {
 
 			// gibt die Häufigkeitsverteilung in der Konsole aus
 			// (häufigstes Merkmal zuerst)
-			System.out.println(entries);
+//			System.out.println(entries);
 
 		}
 
 		System.out.println("Das Korpus enthält " + allFeatures.size() + " unterschiedliche Merkmale.");
+		
+		
+		// --- erste Schritte Information Retrieval ---
+		//TODO JB: Finde alle Artikel im Korpus, die ein bestimmtes Wort (und Flexionsformen) davon enthalten
+		String keyword = "Material"; //suchbegriff kann an euer Korpus angepasst werden
+		
 
 	}
 
