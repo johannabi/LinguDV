@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +15,31 @@ import data.Article;
 
 public class IO {
 
+	/**
+	 * Methode liest alle Füllwörter, die in der .txt-Datei unter dem übergebenen
+	 * Pfad stehen, und legt sie auf ein Set
+	 * 
+	 * @param path Pfad der Füllwort-Datei
+	 * @return
+	 * @throws IOException
+	 */
 	public static Set<String> readStopwords(String path) throws IOException {
-		// TODO JB: entwickle eine Methode, die alle Füllwörter aus der Datei
-		// unter dem gegebenen Pfad liest und auf ein Set<String> schreibt
 
-		return null;
+		// leeres Set, das alle Füllwörter speichern soll
+		Set<String> stopwords = new HashSet<String>();
+
+		// BufferedReader kann Datei Zeile für Zeile einlesen
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		String line = "";
+
+		// jede Zeile wir dem stopwords-Set hinzugefügt
+		while ((line = br.readLine()) != null)
+			stopwords.add(line);
+
+		// BufferedReader wird zuletzt geschlossen
+		br.close();
+
+		return stopwords;
 	}
 
 	/**

@@ -7,8 +7,6 @@
 articles_allFeatures.txt
 
 *.log
-.classpath
-.settings
 /target/
 /bin/
 

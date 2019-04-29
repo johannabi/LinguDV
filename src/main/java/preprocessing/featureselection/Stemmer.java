@@ -1,10 +1,7 @@
 package preprocessing.featureselection;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.tartarus.snowball.SnowballProgram;
-import org.tartarus.snowball.ext.EnglishStemmer;
-import org.tartarus.snowball.ext.German2Stemmer;
 
 import opennlp.tools.stemmer.snowball.SnowballStemmer;
 import opennlp.tools.stemmer.snowball.SnowballStemmer.ALGORITHM;
@@ -32,9 +29,23 @@ public class Stemmer extends AbstractFeatureSelector {
 
 	@Override
 	public List<String> selectFeatures(String text) {
-		// TODO JB: tokenisiere den Text mithilfe des Tokenizers und reduziere die
+		// tokenisiere den Text mithilfe des Tokenizers und reduziere die
 		// entstandenen Tokens auf den Wortstamm (mithilfe des Stemmers)
-		return null;
+		
+		//stemmer benötigt einzelne Tokens, deshalb wird der übergebene Text
+		//zunächst tokeniziert
+		List<String> tokens = tokenizer.selectFeatures(text);
+		
+		//leere Liste, die alle Wortstämme speichern soll
+		List<String> stems = new ArrayList<String>();
+		
+		// jedes einzelne Token wird nach und nach gestemmt...
+		for(String token : tokens) {
+			String stem = (String) stemmer.stem(token);
+			// ... und der stems-List hinzugefügt
+			stems.add(stem);
+		}
+		return stems;
 	}
 	
 	
