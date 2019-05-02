@@ -29,8 +29,13 @@
 					</sources> </configuration> </execution> </executions> -->
 			</plugin>
 		</plugins>
-	</build>
 
+	</build>
+	
+	<properties>
+		
+	</properties>
+	
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<!-- zur Verarbeitung von html -->
@@ -61,6 +66,7 @@
 			<artifactId>opennlp-tools</artifactId>
 			<version>1.9.0</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.googlecode.mate-tools/anna -->
 		<!-- Mate Tools (Lemmatizer) -->

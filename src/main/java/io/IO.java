@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 
@@ -121,6 +122,23 @@ public class IO {
 			fw.write(sb.toString());
 			fw.close();
 		}
+	}
+
+	public static void exportFeatures(Set<String> allFeatures, String path) throws IOException {
+		
+		Set<String> features = new TreeSet<String>(allFeatures);
+		File featureFile = new File(path);
+		if (!featureFile.exists())
+			featureFile.createNewFile();
+		
+		StringBuilder sb = new StringBuilder();
+		for (String feature : features) {
+			sb.append(feature + "\n");
+		}
+		FileWriter fw = new FileWriter(featureFile);
+		fw.write(sb.toString());
+		fw.close();
+		
 	}
 
 }

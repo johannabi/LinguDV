@@ -94,6 +94,14 @@ public class WikipediaParser {
 		Node sibling = node.getNextSibling();
 		if (sibling != null) {
 			boolean crawl = true;
+			
+			if(node.getNodeName().equals("STYLE")) {
+				crawl = false;
+				System.out.println(node.getTextContent());
+			}
+				
+			
+
 			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
 			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = sibling.getAttributes();
@@ -104,13 +112,20 @@ public class WikipediaParser {
 					if (classVal.equals("NavFrame navigation-not-searchable"))
 						crawl = false;
 				}
-			} 
+			}
+			
 			if(crawl)
 				process(sibling); //bearbeitet rekursiv die Geschwister-Knoten
 		}
 		Node child = node.getFirstChild();
 		if (child != null) {
 			boolean crawl = true;
+			
+			if(node.getNodeName().equals("STYLE")) {
+				crawl = false;
+				System.out.println(node.getTextContent());
+			}
+				
 			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
 			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = child.getAttributes();

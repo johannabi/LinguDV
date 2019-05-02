@@ -30,7 +30,7 @@ public class PreproArticles {
 
 		// --- Artikel einlesen ---
 		List<Article> articles = new ArrayList<Article>();
-		IO.readArticles("src/main/resources/data/export/Bergbau", articles);
+		IO.readArticles("src/main/resources/data/export", articles);
 		System.out.println(articles.size() + " Artikel gefunden");
 
 		// --- Artikel vorverarbeiten ---
@@ -40,7 +40,7 @@ public class PreproArticles {
 
 		
 //		AbstractFeatureSelector fs = new OpenNLPTokenizer(false, "de");
-		AbstractFeatureSelector fs = new Stemmer(false, "de");
+		AbstractFeatureSelector fs = new Stemmer(true, "de");
 //		AbstractFeatureSelector fs = new Lemmatizer(false, "de");
 		// statt OpenNLPTokenizer kann hier auch der MyTokenizer oder
 		// der Stemmer initialisiert werden
@@ -82,15 +82,17 @@ public class PreproArticles {
 //			System.out.println(entries);
 
 		}
-
+//		fs.printCleanedFeatures();
 		System.out.println("Das Korpus enthält " + allFeatures.size() + " unterschiedliche Merkmale.");
-		
+		IO.exportFeatures(allFeatures, "features.txt");
 		
 		// --- erste Schritte Information Retrieval ---
 		//TODO JB: Finde alle Artikel im Korpus, die ein bestimmtes Wort (und Flexionsformen) davon enthalten
-		String keyword = "Material"; //suchbegriff kann an euer Korpus angepasst werden
-		
-
+		String keyword = "3-407-85038-7.ihr"; //suchbegriff kann an euer Korpus angepasst werden
+		for(Article a : articles) {
+			if(a.getFeatures().contains(keyword))
+				System.out.println(a.getContent());
+		}
 	}
 
 }

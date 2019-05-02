@@ -58,7 +58,7 @@ public class WikipediaCrawler {
 			Elements articleList = mwPages.getElementsByTag("a");
 			for (Element e : articleList) {
 				String url = "https://de.wikipedia.org" + e.attr("href");
-				System.out.println(url);
+//				System.out.println(url);
 				if(url.contains("Portal:")) //URL verweist auf Portal-Seite, Portal-Seiten sollen nicht gecrawlt werden
 					continue;
 				Article article = wp.parse(url, mainCat, catString);
