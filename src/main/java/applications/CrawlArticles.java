@@ -20,8 +20,8 @@ public class CrawlArticles {
 	public static void main(String[] args) throws IOException {
 		List<String> categoryLinks = new ArrayList<String>();
 		// fügt Kategorien hinzu, die gesammelt werden sollen
-		categoryLinks.add("Literarisches_Leben");
-		categoryLinks.add("Literaturverfilmung");
+		categoryLinks.add("Literatur");
+		categoryLinks.add("Film");
 		
 		int limit = 500; // Anzahl der Artikel pro Kategorie
 		WikipediaCrawler wc = new WikipediaCrawler();

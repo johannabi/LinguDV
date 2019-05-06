@@ -88,8 +88,7 @@ public abstract class AbstractFeatureSelector {
 		Matcher m = p.matcher(c);
 		if(m.matches())
 			c = "YEAR";
-		
-		
+
 		return c;
 	}
 	

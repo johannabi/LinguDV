@@ -52,20 +52,28 @@ public class IO {
 	 * @return
 	 * @throws IOException
 	 */
-	public static List<Article> readArticles(String rootPath, List<Article> articles) throws IOException {
+	public static List<Article> readArticles(String rootPath, List<Article> articles) {
 
 		File rootDir = new File(rootPath);
 		String category = rootDir.getName();
 
 		File[] dirs = rootDir.listFiles();
-		for (int i = 0; i < dirs.length; i++) {
+		try {
+			for (int i = 0; i < dirs.length; i++) {
 
-			if (dirs[i].isDirectory()) {
-				readArticles(dirs[i].getAbsolutePath(), articles);
-			} else {
-				articles.add(readArticle(dirs[i], category));
+				if (dirs[i].isDirectory()) {
+					readArticles(dirs[i].getAbsolutePath(), articles);
+				} else {
+					articles.add(readArticle(dirs[i], category));
+				}
 			}
+		} catch (NullPointerException e) {
+			System.out.println("Das Korpus muss erst gecrawlt werden (applications.CrawlArticles) .");
+			System.exit(0);
+		} catch (IOException e) {
+			
 		}
+		
 
 		return articles;
 	}

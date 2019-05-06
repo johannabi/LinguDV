@@ -88,7 +88,7 @@ public class PreproArticles {
 		
 		// --- erste Schritte Information Retrieval ---
 		//TODO JB: Finde alle Artikel im Korpus, die ein bestimmtes Wort (und Flexionsformen) davon enthalten
-		String keyword = "3-407-85038-7.ihr"; //suchbegriff kann an euer Korpus angepasst werden
+		String keyword = "klassifizieren"; //suchbegriff kann an euer Korpus angepasst werden
 		for(Article a : articles) {
 			if(a.getFeatures().contains(keyword))
 				System.out.println(a.getContent());

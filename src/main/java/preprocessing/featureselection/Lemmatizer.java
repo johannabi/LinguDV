@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,6 +72,7 @@ public class Lemmatizer extends AbstractFeatureSelector{
 
 		// 2) Sätze mit OpenNLP tokenisieren
 		for (int i = 0; i < sentences.length; i++) {
+//			System.out.println(sentences[i]);
 			String[] tokens = tokenizer.tokenize(sentences[i]);
 
 			// MateToos benötigt als erstes Token eines Satzes <root>
@@ -86,9 +88,8 @@ public class Lemmatizer extends AbstractFeatureSelector{
 
 			sentence = lemmatizer.apply(sentence);
 			String[] currLemmas = sentence.plemmas;
-			// 3a) vergleiche die enthaltenen Lemmata mit dem stopword-Set und
-			// lösche die entsprechenden Funktionswörter aus der Lemmata-Liste
-
+//			System.out.println(Arrays.asList(currLemmas));
+			
 			// 4) alle Lemmata aus dem Text sammeln,
 			// dem features-Set hinzufügen und zurückgeben (wie bei tokenize())
 			for (int j = 0; j < currLemmas.length; j++) {				

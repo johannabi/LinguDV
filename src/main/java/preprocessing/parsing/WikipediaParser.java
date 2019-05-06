@@ -97,7 +97,7 @@ public class WikipediaParser {
 			
 			if(node.getNodeName().equals("STYLE")) {
 				crawl = false;
-				System.out.println(node.getTextContent());
+//				System.out.println(node.getTextContent());
 			}
 				
 			
@@ -123,7 +123,7 @@ public class WikipediaParser {
 			
 			if(node.getNodeName().equals("STYLE")) {
 				crawl = false;
-				System.out.println(node.getTextContent());
+//				System.out.println(node.getTextContent());
 			}
 				
 			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
