@@ -20,8 +20,8 @@ public class CrawlArticles {
 	public static void main(String[] args) throws IOException {
 		List<String> categoryLinks = new ArrayList<String>();
 		// fügt Kategorien hinzu, die gesammelt werden sollen
-		categoryLinks.add("Literatur");
-		categoryLinks.add("Film");
+		categoryLinks.add("Biologie");
+//		categoryLinks.add("Film");
 		
 		int limit = 500; // Anzahl der Artikel pro Kategorie
 		WikipediaCrawler wc = new WikipediaCrawler();
@@ -31,7 +31,7 @@ public class CrawlArticles {
 		
 		System.out.println(articles.size() + " Artikel gefunden");
 
-		IO.exportArticles("src/main/resources/data/export", articles);
+		IO.exportArticles("src/main/resources/data/Biologie", articles);
 	}
 
 }

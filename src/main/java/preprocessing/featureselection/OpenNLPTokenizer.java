@@ -60,11 +60,12 @@ public class OpenNLPTokenizer extends AbstractFeatureSelector {
 				if (!stopwords.contains(lowerToken))
 					tokensWithoutSW.add(cleanedTokens.get(i));
 			}
-			
+			updateDocumentFrequencies(tokensWithoutSW);
 			return tokensWithoutSW;
 			
 		} else { //falls kein Stopword-Filter aktiviert ist, werden alle Tokens
 			// ungefiltert zurückgegeben
+			updateDocumentFrequencies(cleanedTokens);
 			return cleanedTokens;
 		}
 		

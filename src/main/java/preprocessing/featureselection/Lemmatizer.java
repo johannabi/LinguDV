@@ -96,7 +96,7 @@ public class Lemmatizer extends AbstractFeatureSelector{
 				features.add(currLemmas[j]);
 			}
 		}
-		
+		updateDocumentFrequencies(features);
 
 		return features;
 	}

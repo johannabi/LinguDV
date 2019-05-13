@@ -2,6 +2,8 @@ package preprocessing.featureselection;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +11,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.Article;
 import io.IO;
 
 /**
@@ -23,6 +26,11 @@ public abstract class AbstractFeatureSelector {
 	 * enthält alle Merkmale, die im Korpus auftauchen
 	 */
 	protected Set<String> allFeatures;
+	
+	/**
+	 * zählt, in wie vielen Dokumenten ein Merkmal vorkommt
+	 */
+	protected Map<String, Integer> documentFreqs;
 
 	/**
 	 * Set, das alle Funktionswörter aus einer .txt-Datei enthält
@@ -30,12 +38,13 @@ public abstract class AbstractFeatureSelector {
 	protected Set<String> stopwords;
 	
 	
-	private Map<String, String> cleaned = new HashMap<String, String>();
+	
 
 	
 	public AbstractFeatureSelector(boolean stopwordFilter, String language) {
 
 		this.allFeatures = new TreeSet<String>();
+		this.documentFreqs = new HashMap<String, Integer>();
 
 		if (stopwordFilter)
 			try {
@@ -74,9 +83,6 @@ public abstract class AbstractFeatureSelector {
 		String c = f.replaceAll("^[^\\p{L}^\\p{N}\\s%]+|[^\\p{L}^\\p{N}\\s%]+$", "");
 		c = c.toLowerCase();
 		
-		if(!c.equals(f))
-			cleaned.put(f, c);
-		
 		//string muss mindestens einen lateinischen Buchstaben enthalten
 		if(c.matches("[\\s\\p{L}\\p{M}&&[^\\p{Alpha}]]+")) {
 			return "";
@@ -92,9 +98,25 @@ public abstract class AbstractFeatureSelector {
 		return c;
 	}
 	
-	public void printCleanedFeatures() {
-		for(Map.Entry<String, String> e : cleaned.entrySet()) {
-			System.out.println(e.getKey() + " - " + e.getValue());
+	/**
+	 * entfernt Merkmale aus dem Bag of Words, die nur in wenigen 
+	 * Dokumenten vorkommen
+	 * @param a
+	 * @param limit Anzahl der Dokumente, in denen ein Merkmal mindestens auftauchen muss
+	 */
+	public void deleteRareFeatures(Article a, int limit) {
+		//TODO JB: entwickle eine Methode, die Merkmale, die in zu wenigen
+		//Dokumenten vorkommen (weniger als limit), ausschließt
+	}
+	
+	protected void updateDocumentFrequencies(List<String> features) {
+		Set<String> uniqueFeatures = new HashSet<String>(features);
+		
+		for(String f : uniqueFeatures) {
+			Integer freq = documentFreqs.get(f);
+			if (freq == null)
+				freq = 0;
+			documentFreqs.put(f, freq+1);
 		}
 	}
 	

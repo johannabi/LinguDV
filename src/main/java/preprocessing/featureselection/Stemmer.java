@@ -68,6 +68,9 @@ public class Stemmer extends AbstractFeatureSelector {
 			// ... und der stems-List hinzugefügt
 			stems.add(stem);
 		}
+		
+		
+		updateDocumentFrequencies(stems);
 		return stems;
 	}
 	

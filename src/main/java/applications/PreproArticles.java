@@ -82,7 +82,6 @@ public class PreproArticles {
 //			System.out.println(entries);
 
 		}
-//		fs.printCleanedFeatures();
 		System.out.println("Das Korpus enthält " + allFeatures.size() + " unterschiedliche Merkmale.");
 		IO.exportFeatures(allFeatures, "features.txt");
 		
