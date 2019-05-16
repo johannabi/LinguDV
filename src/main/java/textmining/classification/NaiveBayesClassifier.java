@@ -82,7 +82,29 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 	 */
 	private void printRelevantFeatures() {
 		//TODO JB: implementiere die Methode
-	
+		//inClass DF
+		List<Entry<String, Integer>> entries = 
+				new ArrayList<Entry<String, Integer>>(
+						inClassDFs.entrySet());
+		Collections.sort(entries, Entry.comparingByValue());
+		Collections.reverse(entries);
+		System.out.println("---Merkmale Film---(von "
+				+ "" + membersInClass + " Artikeln)");
+		for(int i = 0; i < 20; i++) {
+			System.out.println(entries.get(i));
+		}
+		
+		//notInClassDF
+		entries = 
+				new ArrayList<Entry<String, Integer>>(
+						notInClassDFs.entrySet());
+		Collections.sort(entries, Entry.comparingByValue());
+		Collections.reverse(entries);
+		System.out.println("---Merkmale Literatur---(von " + membersNotInClass + " Artikeln)");
+		for(int i = 0; i < 20; i++) {
+			System.out.println(entries.get(i));
+		}
+		
 	}
 
 	@Override

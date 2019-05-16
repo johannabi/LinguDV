@@ -23,7 +23,7 @@ public class ClassifyArticles {
 	public static void main(String[] args) throws IOException {
 		// --- Artikel einlesen ---
 		List<Article> articles = new ArrayList<Article>();
-		IO.readArticles("src/main/resources/data/FilmBiologie", articles);
+		IO.readArticles("src/main/resources/data/FilmLiteratur", articles);
 //		IO.readArticles("src/main/resources/data/export", articles);
 		
 		String posLabel = "Film";
@@ -37,8 +37,8 @@ public class ClassifyArticles {
 		Set<String> allFeatures = new HashSet<String>();
 
 //		AbstractFeatureSelector fs = new OpenNLPTokenizer(true, "de");
-//		AbstractFeatureSelector fs = new Stemmer(true, "de");
-		AbstractFeatureSelector fs = new Lemmatizer(false, "de");
+		AbstractFeatureSelector fs = new Stemmer(true, "de");
+//		AbstractFeatureSelector fs = new Lemmatizer(false, "de");
 
 		for (int i = 0; i < articles.size(); i++) {
 			Article a = articles.get(i);
@@ -69,9 +69,11 @@ public class ClassifyArticles {
 		NaiveBayesClassifier nb = new NaiveBayesClassifier(posLabel, negLabel);
 		nb.train(trainArticles);
 
-		Article testArticle = testArticles.get(0);
-		String predicted = nb.classify(testArticle);
-		System.out.println(predicted);
+		for (Article testArticle : testArticles) {
+			String predicted = nb.classify(testArticle);
+			System.out.println(predicted + " " + testArticle.getCategory());
+		}
+		
 	}
 
 }
