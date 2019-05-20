@@ -3,8 +3,8 @@ package preprocessing.featureselection;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,11 +21,6 @@ import io.IO;
  *
  */
 public abstract class AbstractFeatureSelector {
-
-	/**
-	 * enthält alle Merkmale, die im Korpus auftauchen
-	 */
-	protected Set<String> allFeatures;
 	
 	/**
 	 * zählt, in wie vielen Dokumenten ein Merkmal vorkommt
@@ -43,7 +38,6 @@ public abstract class AbstractFeatureSelector {
 	
 	public AbstractFeatureSelector(boolean stopwordFilter, String language) {
 
-		this.allFeatures = new TreeSet<String>();
 		this.documentFreqs = new HashMap<String, Integer>();
 
 		if (stopwordFilter)
@@ -66,9 +60,6 @@ public abstract class AbstractFeatureSelector {
 		return stopwords;
 	}
 
-	public Set<String> getAllFeatures() {
-		return allFeatures;
-	}
 	
 	/**
 	 * normalisiert Strings, indem vorangehende und nachfolgende
@@ -107,6 +98,11 @@ public abstract class AbstractFeatureSelector {
 	public void deleteRareFeatures(Article a, int limit) {
 		//TODO JB: entwickle eine Methode, die Merkmale, die in zu wenigen
 		//Dokumenten vorkommen (weniger als limit), ausschließt
+		
+		// Tipp: die Map documentFreqs enthält bereits alle
+		// Dokumentenfrequenzen der einzelnen Merkmale
+
+		
 	}
 	
 	protected void updateDocumentFrequencies(List<String> features) {

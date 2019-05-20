@@ -23,7 +23,7 @@ public class ClassifyArticles {
 	public static void main(String[] args) throws IOException {
 		// --- Artikel einlesen ---
 		List<Article> articles = new ArrayList<Article>();
-		IO.readArticles("src/main/resources/data/FilmLiteratur", articles);
+		IO.readArticles("src/main/resources/data/LiteraturFilm", articles);
 //		IO.readArticles("src/main/resources/data/export", articles);
 		
 		String posLabel = "Film";
@@ -68,10 +68,17 @@ public class ClassifyArticles {
 
 		NaiveBayesClassifier nb = new NaiveBayesClassifier(posLabel, negLabel);
 		nb.train(trainArticles);
+		
 
 		for (Article testArticle : testArticles) {
-			String predicted = nb.classify(testArticle);
-			System.out.println(predicted + " " + testArticle.getCategory());
+			double prob = nb.classify(testArticle);
+			
+			String predicted = "";
+			if (prob > 0.5)
+				predicted = posLabel;
+			else
+				predicted = negLabel;
+			System.out.println("Predicted: " + predicted + " -- Actual: " + testArticle.getCategory());
 		}
 		
 	}

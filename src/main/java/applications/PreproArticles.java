@@ -86,7 +86,7 @@ public class PreproArticles {
 		IO.exportFeatures(allFeatures, "features.txt");
 		
 		// --- erste Schritte Information Retrieval ---
-		//TODO JB: Finde alle Artikel im Korpus, die ein bestimmtes Wort (und Flexionsformen) davon enthalten
+		//Finde alle Artikel im Korpus, die ein bestimmtes Wort (und Flexionsformen) davon enthalten
 		String keyword = "klassifizieren"; //suchbegriff kann an euer Korpus angepasst werden
 		for(Article a : articles) {
 			if(a.getFeatures().contains(keyword))

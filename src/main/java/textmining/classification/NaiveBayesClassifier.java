@@ -73,7 +73,7 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 				}
 			}
 
-		printRelevantFeatures();
+//		printRelevantFeatures();
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 	 * Kategorie in der Konsole ausgeben
 	 */
 	private void printRelevantFeatures() {
-		//TODO JB: implementiere die Methode
+		
 		//inClass DF
 		List<Entry<String, Integer>> entries = 
 				new ArrayList<Entry<String, Integer>>(
@@ -108,7 +108,7 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 	}
 
 	@Override
-	public String classify(Article article) {
+	public double classify(Article article) {
 
 		// P(Article|Class)
 		double probArtClass = 1d;
@@ -152,11 +152,9 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 		if (probNotClassArticle == 0.0) {
 			probNotClassArticle = Double.MIN_VALUE;
 		}
+		double rel = probClassArticle / (probClassArticle+probNotClassArticle);
 
-		if (probClassArticle > probNotClassArticle)
-			return inClassLabel;
-		else
-			return notInClassLabel;
+		return rel;
 	}
 
 }
