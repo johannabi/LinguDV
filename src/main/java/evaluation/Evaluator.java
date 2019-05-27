@@ -45,6 +45,8 @@ public class Evaluator {
 		if (limit > allArticles.size())
 			groups.add(group);
 
+		// alle vier möglichen Verhältnisse zwischen 
+		// tatäschlichem und klassifiziertem Label
 		int tp = 0;
 		int fp = 0;
 		int fn = 0;

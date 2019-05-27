@@ -1,13 +1,13 @@
 package preprocessing.featureselection;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,13 +96,27 @@ public abstract class AbstractFeatureSelector {
 	 * @param limit Anzahl der Dokumente, in denen ein Merkmal mindestens auftauchen muss
 	 */
 	public void deleteRareFeatures(Article a, int limit) {
-		//TODO JB: entwickle eine Methode, die Merkmale, die in zu wenigen
-		//Dokumenten vorkommen (weniger als limit), ausschließt
 		
-		// Tipp: die Map documentFreqs enthält bereits alle
-		// Dokumentenfrequenzen der einzelnen Merkmale
-
+		//Version 1)
+		ListIterator<String> iter = a.getFeatures().listIterator();
+		// ListIterator kann ueber Liste iterieren waehrend man
+		// Elemente löscht
+		while(iter.hasNext()) {
+			String f = iter.next();
+			if(documentFreqs.get(f) < limit) {
+				iter.remove();
+			}
+		}
 		
+		
+		//Version 2)
+//		List<String> cleanedFeatures = new ArrayList<String>();
+//		for(String f : a.getFeatures()) {
+//			if (documentFreqs.get(f) >= limit) {
+//				cleanedFeatures.add(f);
+//			}
+//		}
+//		a.setFeatures(cleanedFeatures);
 	}
 	
 	protected void updateDocumentFrequencies(List<String> features) {

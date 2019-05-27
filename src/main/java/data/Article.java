@@ -35,6 +35,8 @@ public class Article {
 	 */
 	private List<String> features;
 	
+	private Double[] weightVector;
+	
 	public Article(String content, String title, String url, String category, String subCategory) {
 		this.content = content;
 		this.url = url;
@@ -69,6 +71,14 @@ public class Article {
 	
 	public void setFeatures(List<String> features) {
 		this.features = features;
+	}
+	
+	public Double[] getWeightVector() {
+		return weightVector;
+	}
+	
+	public void setWeightVector(Double[] weightVector) {
+		this.weightVector = weightVector;
 	}
 	
 	@Override

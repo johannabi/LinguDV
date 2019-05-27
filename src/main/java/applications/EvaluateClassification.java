@@ -11,6 +11,7 @@ import data.Article;
 import evaluation.Evaluator;
 import io.IO;
 import preprocessing.featureselection.AbstractFeatureSelector;
+import preprocessing.featureselection.Lemmatizer;
 import preprocessing.featureselection.OpenNLPTokenizer;
 import preprocessing.featureselection.Stemmer;
 import textmining.classification.NaiveBayesClassifier;

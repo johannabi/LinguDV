@@ -3,19 +3,16 @@ package applications;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import data.Article;
 import io.IO;
 import preprocessing.featureselection.AbstractFeatureSelector;
-import preprocessing.featureselection.Lemmatizer;
-import preprocessing.featureselection.OpenNLPTokenizer;
 import preprocessing.featureselection.Stemmer;
+import preprocessing.featureweighting.AbstractVectorization;
+import preprocessing.featureweighting.BinaryVectorization;
 import textmining.classification.NaiveBayesClassifier;
 
 public class ClassifyArticles {
@@ -40,6 +37,7 @@ public class ClassifyArticles {
 		AbstractFeatureSelector fs = new Stemmer(true, "de");
 //		AbstractFeatureSelector fs = new Lemmatizer(false, "de");
 
+		// Merkmale selektieren
 		for (int i = 0; i < articles.size(); i++) {
 			Article a = articles.get(i);
 			List<String> features = fs.selectFeatures(a.getContent());
@@ -48,7 +46,7 @@ public class ClassifyArticles {
 			a.setFeatures(features);
 		}
 		
-		//Merkmale, die nur in wenigen Dokumenten auftauchen, werden entfernt
+		// Merkmale, die nur in wenigen Dokumenten auftauchen, werden entfernt
 		for(Article a : articles) {
 			fs.deleteRareFeatures(a, 5);
 			// die Merkmale des aktuellen Artikels werden zu allFeatures hinzugefügt
@@ -57,6 +55,17 @@ public class ClassifyArticles {
 		
 		System.out.println("Das Korpus enthält " + allFeatures.size() + " unterschiedliche Merkmale.");
 		IO.exportFeatures(allFeatures, "features.txt");
+		
+		
+		// --- Merkmale gewichten ---
+		AbstractVectorization vectorization = new BinaryVectorization(allFeatures);
+		
+		for (Article a : articles) {
+			Double[] vec = vectorization.vectorize(a.getFeatures());
+			a.setWeightVector(vec);
+		}
+		
+		
 
 		// Textklassifikation
 		Collections.shuffle(articles);
