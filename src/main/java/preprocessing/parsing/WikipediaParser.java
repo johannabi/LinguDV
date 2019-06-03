@@ -57,7 +57,7 @@ public class WikipediaParser {
 		} catch (Exception e) {
 			return null;
 		}
-		if(builder.length() > 100) { // nur Artikel, die mehr als 100 Zeichen enthalten, werden aufgenommen.
+		if(builder.length() > 500) { // nur Artikel, die mehr als 500 Zeichen enthalten, werden aufgenommen.
 			return new Article(builder.toString().trim(), title, url, mainCategory, category);
 		}
 			
@@ -82,11 +82,20 @@ public class WikipediaParser {
 		if (elementName.equals("p")) {
 			String elementContent = node.getTextContent().trim();
 			// remove footnotes
-			Pattern pattern = Pattern.compile(regex);
-			Matcher matcher = pattern.matcher(elementContent);
+			Pattern fnPattern = Pattern.compile(regex);
+			Matcher matcher = fnPattern.matcher(elementContent);
 			while (matcher.find()) {
 				elementContent = elementContent.replace(matcher.group(1), "");
 			}
+			
+			Pattern ipaPattern = Pattern.compile("\\[.mw-parser-output(.+)\\]");
+			Matcher match = ipaPattern.matcher(elementContent);
+			while (match.find()) {
+				elementContent = elementContent.replace(matcher.group(), "");
+//				if(!elementContent.equals(newString))
+//					System.out.println(newString);
+			}
+			
 			if (elementContent.length() > 0) {
 				builder.append(elementContent).append("\n\n");
 			}

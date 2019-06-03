@@ -1,4 +1,4 @@
-package preprocessing;
+package preprocessing.featureselection;
 
 import static org.junit.Assert.*;
 

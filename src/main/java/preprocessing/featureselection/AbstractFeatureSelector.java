@@ -59,6 +59,10 @@ public abstract class AbstractFeatureSelector {
 	public Set<String> getStopwords() {
 		return stopwords;
 	}
+	
+	public Map<String, Integer> getDocumentFrequencies() {
+		return documentFreqs;
+	}
 
 	
 	/**
