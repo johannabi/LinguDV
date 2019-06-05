@@ -20,9 +20,9 @@ public class TestTFIDF {
 	@Test
 	public void test() {
 		List<Article> articles = new ArrayList<Article>();
-		articles.add(new Article("Der letzte Sommer war warm.", "", "", "", ""));
-		articles.add(new Article("Im Sommer sind Semesterferien.", "", "", "", ""));
-		articles.add(new Article("Ein warmer Sommer.", "", "", "", ""));
+		articles.add(new Article("Der letzte Sommer war warm.", "", "", ""));
+		articles.add(new Article("Im Sommer sind Semesterferien.", "", "", ""));
+		articles.add(new Article("Ein warmer Sommer.", "", "", ""));
 		
 		
 		Set<String> allFeatures = new HashSet<String>();

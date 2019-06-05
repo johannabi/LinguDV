@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 
 import data.Article;
 
-
 /**
  * A Parser for Wikipedia-Urls using the org.cyberneko.html.parsers.DOMParser;
  * Creates an object of class Document, which consists of text, title, url and
@@ -36,9 +35,9 @@ public class WikipediaParser {
 	 * extrahiert Absätze (p-Tags) und den Titel (erstes h1-Tag), die sich unter der
 	 * übergebenen Wikipedia-URL befinden
 	 * 
-	 * @param url       Artikel-URL
-	 * @param mainCategory	oberste Kategorie, die durchsucht wird
-	 * @param category	konkrete Kategorie des Artikels
+	 * @param url          Artikel-URL
+	 * @param mainCategory oberste Kategorie, die durchsucht wird
+	 * @param category     konkrete Kategorie des Artikels
 	 */
 
 	public Article parse(String url, String mainCategory, String category) {
@@ -57,10 +56,10 @@ public class WikipediaParser {
 		} catch (Exception e) {
 			return null;
 		}
-		if(builder.length() > 500) { // nur Artikel, die mehr als 500 Zeichen enthalten, werden aufgenommen.
-			return new Article(builder.toString().trim(), title, url, mainCategory, category);
+		if (builder.length() > 500) { // nur Artikel, die mehr als 500 Zeichen enthalten, werden aufgenommen.
+			return new Article(builder.toString().trim(), title, url, mainCategory);
 		}
-			
+
 		else
 			return null;
 	}
@@ -87,7 +86,7 @@ public class WikipediaParser {
 			while (matcher.find()) {
 				elementContent = elementContent.replace(matcher.group(1), "");
 			}
-			
+
 			Pattern ipaPattern = Pattern.compile("\\[.mw-parser-output(.+)\\]");
 			Matcher match = ipaPattern.matcher(elementContent);
 			while (match.find()) {
@@ -95,7 +94,7 @@ public class WikipediaParser {
 //				if(!elementContent.equals(newString))
 //					System.out.println(newString);
 			}
-			
+
 			if (elementContent.length() > 0) {
 				builder.append(elementContent).append("\n\n");
 			}
@@ -103,52 +102,50 @@ public class WikipediaParser {
 		Node sibling = node.getNextSibling();
 		if (sibling != null) {
 			boolean crawl = true;
-			
-			if(node.getNodeName().equals("STYLE")) {
+
+			if (node.getNodeName().equals("STYLE")) {
 				crawl = false;
 //				System.out.println(node.getTextContent());
 			}
-				
-			
 
-			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
+			// prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
 			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = sibling.getAttributes();
-			if(nnm != null) {
+			if (nnm != null) {
 				Node classAttr = nnm.getNamedItem("class");
-				if(classAttr != null) {
+				if (classAttr != null) {
 					String classVal = classAttr.getNodeValue();
 					if (classVal.equals("NavFrame navigation-not-searchable"))
 						crawl = false;
 				}
 			}
-			
-			if(crawl)
-				process(sibling); //bearbeitet rekursiv die Geschwister-Knoten
+
+			if (crawl)
+				process(sibling); // bearbeitet rekursiv die Geschwister-Knoten
 		}
 		Node child = node.getFirstChild();
 		if (child != null) {
 			boolean crawl = true;
-			
-			if(node.getNodeName().equals("STYLE")) {
+
+			if (node.getNodeName().equals("STYLE")) {
 				crawl = false;
 //				System.out.println(node.getTextContent());
 			}
-				
-			//prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
+
+			// prüft,ob der Knoten der Klasse "NavFrame navigation-not-searchable" angehört
 			// Diese sollen nicht verarbeitet werden
 			NamedNodeMap nnm = child.getAttributes();
-			if(nnm != null) {
+			if (nnm != null) {
 				Node classAttr = nnm.getNamedItem("class");
-				if(classAttr != null) {
+				if (classAttr != null) {
 					String classVal = classAttr.getNodeValue();
 					if (classVal.equals("NavFrame navigation-not-searchable"))
 						crawl = false;
 				}
-			} 
-			if(crawl)
-				process(child); //bearbeitet rekursiv die Kind-Knoten
-				
+			}
+			if (crawl)
+				process(child); // bearbeitet rekursiv die Kind-Knoten
+
 		}
 		if (hasTitle == false) {
 			title = "ohne Titel";

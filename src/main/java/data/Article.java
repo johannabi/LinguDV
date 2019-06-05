@@ -29,7 +29,7 @@ public class Article {
 	/**
 	 * die tatsächliche Kategorie des Artikels
 	 */
-	private String subCategory;
+	private List<String> subCategories;
 	/**
 	 * Bag of Words-Merkmale des Artikels
 	 */
@@ -37,14 +37,19 @@ public class Article {
 	
 	private Double[] weightVector;
 	
-	public Article(String content, String title, String url, String category, String subCategory) {
+	public Article(String content, String title, String url, String category) {
 		this.content = content;
 		this.url = url;
 		this.category = category;
-		this.subCategory = subCategory;
+//		this.subCategory = subCategory;
 		this.title = title;
 	}
 	
+	public Article(String string, String name, String url, String category, List<String> subCategories) {
+		this(string, name, url, category);
+		this.subCategories = subCategories;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -61,9 +66,9 @@ public class Article {
 		return category;
 	}
 	
-	public String getSubCategory() {
-		return subCategory;
-	}
+//	public String getSubCategory() {
+//		return subCategory;
+//	}
 	
 	public List<String> getFeatures() {
 		return features;
@@ -89,6 +94,14 @@ public class Article {
 	@Override
 	public int hashCode() {
 		return url.hashCode();
+	}
+
+	public void setCategories(List<String> otherCats) {
+		this.subCategories = otherCats;
+	}
+	
+	public List<String> getCategories() {
+		return subCategories;
 	}
 	
 	

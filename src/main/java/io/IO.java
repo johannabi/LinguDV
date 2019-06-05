@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +65,9 @@ public class IO {
 				if (dirs[i].isDirectory()) {
 					readArticles(dirs[i].getAbsolutePath(), articles);
 				} else {
-					articles.add(readArticle(dirs[i], category));
+					Article a = readArticle(dirs[i], category);
+					if (a != null)
+						articles.add(a);
 				}
 			}
 		} catch (NullPointerException e) {
@@ -84,11 +87,15 @@ public class IO {
 		String line = "";
 		String url = br.readLine(); // 1. Zeile enthält URL
 		String subCategory = br.readLine(); // 2. Zeile enthält (Sub)Kategorie
+		List<String> subCategories = Arrays.asList(subCategory.split(","));
 		while ((line = br.readLine()) != null) {
 			sb.append(line);
 		}
 		br.close();
-		return new Article(sb.toString(), file.getName(), url, category, subCategory);
+		if(url == null)
+			return null;
+		
+		return new Article(sb.toString(), file.getName(), url, category, subCategories);
 	}
 
 	/**
@@ -116,10 +123,17 @@ public class IO {
 			// url und Artikelinhalt werden in die .txt-Datei geschrieben
 			String content = a.getContent();
 			String url = a.getUrl();
-			String subCategory = a.getSubCategory();
+			List<String> subCategories = a.getCategories();
+		
 			StringBuilder sb = new StringBuilder();
-			sb.append(url + "\n" + subCategory + "\n\n");
-			sb.append(content + "\n");
+			sb.append(url + "\n");
+			for(String s : subCategories) {
+				sb.append(s + ",");
+			}
+			sb.deleteCharAt(sb.length()-1);
+			
+			
+			sb.append("\n\n" + content + "\n");
 			// Sonderzeichen werden aus dem Dateinamen entfernt
 			String title = a.getTitle().replaceAll("[^\\w]+", "");
 

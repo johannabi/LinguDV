@@ -23,8 +23,8 @@ public class TestDistance {
 	public void test() {
 //		fail("Not yet implemented");
 		List<Article> articles = new ArrayList<Article>();
-		articles.add(new Article("Der letzte Sommer war warm.", "", "", "", ""));
-		articles.add(new Article("Im Sommer sind Semesterferien.", "", "", "", ""));
+		articles.add(new Article("Der letzte Sommer war warm.", "", "", ""));
+		articles.add(new Article("Im Sommer sind Semesterferien.", "", "", ""));
 		
 		Set<String> allFeatures = new HashSet<String>();
 		

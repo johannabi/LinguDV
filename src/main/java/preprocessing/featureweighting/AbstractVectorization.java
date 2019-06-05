@@ -11,6 +11,12 @@ public abstract class AbstractVectorization {
 		this.allFeatures = dictionary;
 	}
 	
+	/**
+	 * vektorisiert das übergebene Bag of Words nach den Regeln der
+	 * entsprechenden Unterklasse (CountVectorization, Tfidf, ...)
+	 * @param docFeatures
+	 * @return
+	 */
 	public abstract Double[] vectorize(List<String> docFeatures);
 	
 	@Override

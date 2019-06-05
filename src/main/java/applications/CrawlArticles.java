@@ -22,6 +22,7 @@ public class CrawlArticles {
 		// fügt Kategorien hinzu, die gesammelt werden sollen
 		categoryLinks.add("Actionfilm");
 		categoryLinks.add("Kriminalfilm");
+		categoryLinks.add("Historienfilm");
 		
 		int limit = 500; // Anzahl der Artikel pro Kategorie
 		WikipediaCrawler wc = new WikipediaCrawler();

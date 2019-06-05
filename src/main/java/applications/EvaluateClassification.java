@@ -22,10 +22,10 @@ public class EvaluateClassification {
 	public static void main(String[] args) throws IOException {
 		// --- Artikel einlesen ---
 				List<Article> articles = new ArrayList<Article>();
-				IO.readArticles("src/main/resources/data/LiteraturFilm", articles);
+				IO.readArticles("src/main/resources/data/wikipedia_korpus", articles);
 				
-				String posLabel = "Literatur";
-				String negLabel = "Film";
+				String posLabel = "Historienfilm";
+				String negLabel = "Nicht-H-Film";
 				
 				System.out.println(articles.size() + " Artikel gefunden");
 

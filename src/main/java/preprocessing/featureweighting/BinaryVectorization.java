@@ -3,7 +3,12 @@ package preprocessing.featureweighting;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * Java-Klasse, die die Term-Dokument-Relation durch die
+ * Anwesenheit bzw. Abwesenheits eines Merkmals im Dokument gewichtet
+ * @author Johanna Binnewitt
+ *
+ */
 public class BinaryVectorization extends AbstractVectorization {
 
 	public BinaryVectorization(Set<String> dictionary) {
