@@ -4,11 +4,14 @@ public class Distance {
 	
 	public static double computeEuclideanDistance(Double[] vec1, Double[] vec2) {
 		
-		//TODO JB: implementiere hier eine Methode, die
-		// die euklidische Distanz zwischen den übergebenen
-		// Vektoren (Arrays) berechnet
+		// Lösung
+		double sum = 0;
 		
-		return 0d;
+		for(int i = 0; i < vec1.length; i++) {
+			sum += Math.pow((vec1[i] - vec2[i]), 2);
+		}
+		
+		return Math.sqrt(sum);
 	}
 	
 	public static double computeCosineSimilarity(Double[] vec1, Double[] vec2) {

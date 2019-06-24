@@ -52,8 +52,8 @@ public class ComputeDistances {
 		AbstractVectorization count = new CountVectorization(allFeatures);
 
 		for (Article a : articles) {		
-//			Double[] vec = loglike.vectorize(a.getFeatures());
-			Double[] vec = count.vectorize(a.getFeatures());
+			Double[] vec = loglike.vectorize(a.getFeatures());
+//			Double[] vec = count.vectorize(a.getFeatures());
 			a.setWeightVector(vec);
 		}	
 		

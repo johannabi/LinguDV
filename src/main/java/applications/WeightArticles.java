@@ -60,24 +60,41 @@ public class WeightArticles {
 			printMostRelevantFeatures(featureList, countVec, countVec);
 			System.out.println("-----------------");
 			
-//			System.out.println("tfidf");
-//			Double[] tfidfVec = tfidf.vectorize(a.getFeatures());		
-//			printMostRelevantFeatures(featureList, tfidfVec, countVec);
-//			System.out.println("-----------------");
-			
 			System.out.println("loglikelihood");
 			Double[] likeVec = loglike.vectorize(a.getFeatures());
 			printMostRelevantFeatures(featureList, likeVec, countVec);
+			System.out.println("-----------------");
+			
+			System.out.println("tfidf");
+			Double[] tfidfVec = tfidf.vectorize(a.getFeatures());		
+			printMostRelevantFeatures(featureList, tfidfVec, countVec);
+			System.out.println("-----------------");
+			
+			
 
 		}
 
 	}
 
-	private static void printMostRelevantFeatures(List<String> featureList, Double[] vec, Double[] countVec) {
-		// TODO JB: gib in der Konsole die 10
-		// Merkmale mit der höchsten Gewichtung aus
+	private static void printMostRelevantFeatures(List<String> featureList,
+			Double[] vec, Double[] countVec) {
 		
-
+		//Lösung
+		List<Double> vecList = new ArrayList<Double>(Arrays.asList(vec));
+		
+		for(int i = 0; i < 10; i++) {
+			//in jedem Durchlauf wird das Maximum der Liste ermittelt
+			double max = Collections.max(vecList);
+			
+			//über den Index kann anschließend das zugehörige Merkmal gesucht werden
+			int index = vecList.indexOf(max);
+			
+			System.out.println(featureList.get(index) + ": " + max + "(" + countVec[index] + ")");
+			
+			//das aktuelle Maximum wird auf -1 gesetzt, damit es beim nächsten Durchlauf nicht
+			//mehr das Maximum ist
+			vecList.set(index, -1d);
+		}
 
 	}
 

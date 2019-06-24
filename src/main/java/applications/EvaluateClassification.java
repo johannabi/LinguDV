@@ -14,6 +14,10 @@ import preprocessing.featureselection.AbstractFeatureSelector;
 import preprocessing.featureselection.Lemmatizer;
 import preprocessing.featureselection.OpenNLPTokenizer;
 import preprocessing.featureselection.Stemmer;
+import preprocessing.featureweighting.AbstractVectorization;
+import preprocessing.featureweighting.LogLikelihoodVectorization;
+import preprocessing.similarity.DistanceType;
+import textmining.classification.KNNClassifier;
 import textmining.classification.NaiveBayesClassifier;
 
 public class EvaluateClassification {
@@ -23,9 +27,11 @@ public class EvaluateClassification {
 		// --- Artikel einlesen ---
 				List<Article> articles = new ArrayList<Article>();
 				IO.readArticles("src/main/resources/data/wikipedia_korpus", articles);
+//				IO.readArticles("src/main/resources/data/ActionKriminal", articles);
 				
 				String posLabel = "Historienfilm";
 				String negLabel = "Nicht-H-Film";
+
 				
 				System.out.println(articles.size() + " Artikel gefunden");
 
@@ -56,9 +62,23 @@ public class EvaluateClassification {
 				System.out.println("Das Korpus enthält " + allFeatures.size() + " unterschiedliche Merkmale.");
 				IO.exportFeatures(allFeatures, "features.txt");
 				
+				
+				//Artikel vektorisieren
+				AbstractVectorization vectorization = new LogLikelihoodVectorization(articles, allFeatures);
+				for(Article a : articles) {
+					Double[] weights = vectorization.vectorize(a.getFeatures());
+					a.setWeightVector(weights);
+				}
+				
+				
 				System.out.println("Evaluiere Klassifikation von Artikeln aus den Kategorien: " + posLabel + " und " + negLabel);
 				Evaluator evaluator = new Evaluator(posLabel, negLabel);
+				System.out.println("Evaluiere KNN");
+				evaluator.evaluate(articles, new KNNClassifier(5, DistanceType.COSINE));
+				
+				System.out.println("Evaluiere Naive Bayes");
 				evaluator.evaluate(articles, new NaiveBayesClassifier(posLabel, negLabel));
+				
 	}
 
 }

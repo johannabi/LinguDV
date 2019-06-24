@@ -1,5 +1,7 @@
 package preprocessing.featureweighting;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,23 +26,32 @@ public class TFIDFVectorization extends AbstractVectorization{
 
 	@Override
 	public Double[] vectorize(List<String> docFeatures) {
-		// TODO JB: implementiere hier eine Tf-Idf-Gewichtung
-		// der übergebenen Merkmale
+
 
 		//Double[] tfidf ist der (noch) leere Gewichtungsvektor
 		Double[] tfidf = new Double[super.allFeatures.size()];
 
-		//TODO JB: 1) absolute Häufigkeit für jedes Merkmal in docFeatures berechnen
+		
+		// Lösung
+		
+		//1) absolute Häufigkeit für jedes Merkmal in docFeatures berechnen
 		// (siehe Methode unten (countVectorize()))
-
+		Double[] count = countVectorize(docFeatures);
 		
-		//TODO JB: 2) Frequenz des häufigsten Merkmals ermitteln
-
+		//2) Frequenz des häufigsten Merkmals ermitteln
+		Double maxFreq = Collections.max(Arrays.asList(count));
 		
-		//TODO JB: 3) für jedes Merkmal in allFeatures die relative tf & idf berechnen
+		//3) für jedes Merkmal in allFeatures die relative tf & idf berechnen
 		// und auf den Vektor legen
-		
-		
+		int i = 0;
+		for (String f : allFeatures) {
+
+			double tf = count[i] / maxFreq;
+			double idf = Math.log(corpusSize /( (double) documentFrequency.get(f)));
+
+			tfidf[i] = tf * idf;
+			i++;
+		}		
 
 		return tfidf;
 	}
@@ -55,9 +66,12 @@ public class TFIDFVectorization extends AbstractVectorization{
 
 		
 		Double[] vector = new Double[allFeatures.size()];
-		//TODO JB: implementiere hier (nochmal) die Count Vectorization
-		// (hier reicht ein Copy-Paste aus der Klasse CountVectorization
-		
+
+		int i = 0;
+		for(String f : allFeatures) {
+			vector[i] = new Double(Collections.frequency(docFeatures, f));			
+			i++;
+		}
 
 		
 		return vector;

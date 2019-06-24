@@ -108,7 +108,7 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 	}
 
 	@Override
-	public double classify(Article article) {
+	public String classify(Article article) {
 
 		// P(Article|Class)
 		double probArtClass = 1d;
@@ -153,8 +153,14 @@ public class NaiveBayesClassifier extends AbstractClassifier {
 			probNotClassArticle = Double.MIN_VALUE;
 		}
 		double rel = probClassArticle / (probClassArticle+probNotClassArticle);
+		
+		String classified = "";
+		if (rel > 0.5)
+			classified = inClassLabel;
+		else
+			classified = notInClassLabel;
 
-		return rel;
+		return classified;
 	}
 
 }

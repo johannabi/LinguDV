@@ -80,13 +80,7 @@ public class ClassifyArticles {
 		
 
 		for (Article testArticle : testArticles) {
-			double prob = nb.classify(testArticle);
-			
-			String predicted = "";
-			if (prob > 0.5)
-				predicted = posLabel;
-			else
-				predicted = negLabel;
+			String predicted = nb.classify(testArticle);
 			System.out.println("Predicted: " + predicted + " -- Actual: " + testArticle.getCategory());
 		}
 		

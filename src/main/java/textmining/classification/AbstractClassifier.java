@@ -8,6 +8,6 @@ public abstract class AbstractClassifier {
 	
 	public abstract void train(List<Article> articles);
 	
-	public abstract double classify(Article article);
+	public abstract String classify(Article article);
 
 }

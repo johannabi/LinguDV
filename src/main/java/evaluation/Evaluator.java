@@ -13,7 +13,7 @@ public class Evaluator {
 	// Anzahl der Evaluationsgruppen
 	private int fold = 5;
 	// Evaluationsgruppen
-	private List<List<Article>> groups = new ArrayList<List<Article>>();
+	private List<List<Article>> groups = null;
 	private String posLabel;
 	private String negLabel;
 
@@ -23,7 +23,10 @@ public class Evaluator {
 	}
 
 	public void evaluate(List<Article> allArticles, AbstractClassifier classifier) {
-
+		groups = new ArrayList<List<Article>>();
+		
+		
+		
 		// Anzahl der Dokumente pro Gruppe (aufgerundet)
 		int groupSize = (int) Math.ceil(allArticles.size() / (double) fold);
 
@@ -52,6 +55,7 @@ public class Evaluator {
 		int fn = 0;
 		int tn = 0;
 
+		
 		for (List<Article> testDocs : groups) {
 			List<Article> trainDocs = new ArrayList<Article>(allArticles);
 			trainDocs.removeAll(testDocs);
@@ -60,12 +64,7 @@ public class Evaluator {
 
 			for (Article article : testDocs) {
 				// ... und klassifizieren
-				double prob = classifier.classify(article);
-				String classified = "";
-				if (prob > 0.5)
-					classified = posLabel;
-				else
-					classified = negLabel;
+				String classified = classifier.classify(article);
 				String actual = article.getCategory();
 
 				// richtiges und klassifiziertes Label vergleichen
