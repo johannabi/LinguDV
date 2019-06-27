@@ -79,7 +79,7 @@ public abstract class AbstractFeatureSelector {
 		c = c.toLowerCase();
 		
 		//string muss mindestens einen lateinischen Buchstaben enthalten
-		if(c.matches("[\\s\\p{L}\\p{M}&&[^\\p{Alpha}]]+")) {
+		if(c.matches("[\\s\\p{L}\\p{N}&&[^\\p{Alpha}]]+")) {
 			return "";
 		}
 		
@@ -89,6 +89,12 @@ public abstract class AbstractFeatureSelector {
 		Matcher m = p.matcher(c);
 		if(m.matches())
 			c = "YEAR";
+		
+		String decade = "^[12][0-9]{3}er$";
+		p = Pattern.compile(decade);
+		m = p.matcher(c);
+		if(m.matches())
+			c = "YEARer";
 
 		return c;
 	}

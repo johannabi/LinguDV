@@ -4,11 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import is2.data.SentenceData09;
 import is2.tools.Tool;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -92,8 +88,16 @@ public class Lemmatizer extends AbstractFeatureSelector{
 			
 			// 4) alle Lemmata aus dem Text sammeln,
 			// dem features-Set hinzufügen und zurückgeben (wie bei tokenize())
-			for (int j = 0; j < currLemmas.length; j++) {				
-				features.add(currLemmas[j]);
+			for (int j = 0; j < currLemmas.length; j++) {
+				String lemma = cleanFeature(currLemmas[j]);
+				if(lemma.isEmpty())
+					continue;
+				
+				if(stopwords != null) {
+					if(stopwords.contains(lemma))
+						continue;
+				}
+				features.add(lemma);
 			}
 		}
 		updateDocumentFrequencies(features);
