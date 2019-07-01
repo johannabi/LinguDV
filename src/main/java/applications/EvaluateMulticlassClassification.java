@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import data.Article;
+import data.LabelEvalResult;
 import evaluation.MultiClassEvaluator;
 import io.IO;
 import preprocessing.featureselection.AbstractFeatureSelector;
 import preprocessing.featureselection.Lemmatizer;
+import preprocessing.featureselection.Stemmer;
 import preprocessing.featureweighting.AbstractVectorization;
 import preprocessing.featureweighting.LogLikelihoodVectorization;
 import preprocessing.similarity.DistanceType;
 import textmining.classification.KNNClassifier;
+import textmining.classification.MultiNBClassifier;
 
 public class EvaluateMulticlassClassification {
 	
@@ -28,7 +31,6 @@ public class EvaluateMulticlassClassification {
 				labels.add("Historienfilm");
 				labels.add("Actionfilm");
 				labels.add("Kriminalfilm");
-				labels.add("Biologie");
 
 				
 				System.out.println(articles.size() + " Artikel gefunden");
@@ -39,8 +41,8 @@ public class EvaluateMulticlassClassification {
 				Set<String> allFeatures = new HashSet<String>();
 
 //				AbstractFeatureSelector fs = new OpenNLPTokenizer(true, "de");
-//				AbstractFeatureSelector fs = new Stemmer(true, "de");
-				AbstractFeatureSelector fs = new Lemmatizer(false, "de");
+				AbstractFeatureSelector fs = new Stemmer(true, "de");
+//				AbstractFeatureSelector fs = new Lemmatizer(false, "de");
 
 				for (int i = 0; i < articles.size(); i++) {
 					Article a = articles.get(i);
@@ -72,12 +74,14 @@ public class EvaluateMulticlassClassification {
 
 				
 				MultiClassEvaluator eval = new MultiClassEvaluator(5);
-//				eval.evaluate(articles, new MultiNBClassifier(labels));
+				eval.evaluate(articles, new MultiNBClassifier(labels));
 				
 				System.out.println("_----------------------------------------------_");
-				eval.evaluate(articles, new KNNClassifier(5, DistanceType.COSINE));
+//				eval.evaluate(articles, new KNNClassifier(5, DistanceType.COSINE));
 
 				
 	}
+	
+	
 
 }
