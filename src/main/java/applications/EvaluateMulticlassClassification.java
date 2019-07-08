@@ -77,7 +77,7 @@ public class EvaluateMulticlassClassification {
 				eval.evaluate(articles, new MultiNBClassifier(labels));
 				
 				System.out.println("_----------------------------------------------_");
-//				eval.evaluate(articles, new KNNClassifier(5, DistanceType.COSINE));
+				eval.evaluate(articles, new KNNClassifier(5, DistanceType.COSINE));
 
 				
 	}

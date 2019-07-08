@@ -31,7 +31,9 @@ public class MultiClassEvaluator {
 	 * @return
 	 */
 	public void evaluate(List<Article> allDocs, AbstractClassifier classifier) {
-
+		groups = new ArrayList<List<Article>>();
+		
+		
 		// Anzahl der Dokumente pro Gruppe (aufgerundet)
 		int groupSize = (int) Math.ceil(allDocs.size() / fold);
 

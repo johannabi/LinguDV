@@ -13,6 +13,7 @@ import preprocessing.featureselection.AbstractFeatureSelector;
 import preprocessing.featureselection.Stemmer;
 import preprocessing.featureweighting.AbstractVectorization;
 import preprocessing.featureweighting.BinaryVectorization;
+import textmining.classification.MultiNBClassifier;
 import textmining.classification.NaiveBayesClassifier;
 
 public class ClassifyArticles {
@@ -20,11 +21,18 @@ public class ClassifyArticles {
 	public static void main(String[] args) throws IOException {
 		// --- Artikel einlesen ---
 		List<Article> articles = new ArrayList<Article>();
-		IO.readArticles("src/main/resources/data/LiteraturFilm", articles);
+//		IO.readArticles("src/main/resources/data/LiteraturFilm", articles);
 //		IO.readArticles("src/main/resources/data/export", articles);
+		IO.readArticles("src/main/resources/data/wikipedia_korpus", articles);
 		
 		String posLabel = "Film";
 		String negLabel = "Literatur";
+		
+		List<String> labels = new ArrayList<String>();
+		labels.add("Actionfilm");
+		labels.add("Historienfilm");
+		labels.add("Kriminalfilm");
+		
 		
 		System.out.println(articles.size() + " Artikel gefunden");
 
@@ -75,14 +83,26 @@ public class ClassifyArticles {
 		List<Article> trainArticles = articles.subList(0, trainSize);
 		List<Article> testArticles = articles.subList(trainSize + 1, articles.size() - 1);
 
-		NaiveBayesClassifier nb = new NaiveBayesClassifier(posLabel, negLabel);
+		//binäre Klassifikation
+//		NaiveBayesClassifier nb = new NaiveBayesClassifier(posLabel, negLabel);
+//		nb.train(trainArticles);
+//		for (Article testArticle : testArticles) {
+//			String predicted = nb.classify(testArticle);
+//			System.out.println("Predicted: " + predicted + " -- Actual: " + testArticle.getCategory());
+//		}
+		
+		MultiNBClassifier nb = new MultiNBClassifier(labels);
 		nb.train(trainArticles);
 		
-
-		for (Article testArticle : testArticles) {
-			String predicted = nb.classify(testArticle);
-			System.out.println("Predicted: " + predicted + " -- Actual: " + testArticle.getCategory());
+		for (Article a : testArticles) {
+			String pred = nb.classify(a);
+			System.out.println("Pred: " + pred + " -- Actual: " + a.getCategory());
 		}
+		
+		
+		
+		
+		
 		
 	}
 
